@@ -1,0 +1,72 @@
+<div class="justify-content-between d-flex">
+  <span class="font-weight-bold">
+    Add Pin
+  </span>
+  <mat-icon class="mat-icon" (click)="closePopUp()">cancel</mat-icon>
+</div>
+
+<form action="" [formGroup]="objPinForm">
+
+  <!--NAME  -->
+  <div class="form-field-pd  d-flex mt-3">
+    <label class="col-sm-4 align-items-center d-flex" for="">Title<span class="required">*</span></label>
+    <div class="col-sm-8">
+      <input class="form-control " type="text" formControlName="strTitle"
+        [ngClass]="{'is-invalid': objPinForm.get('strTitle')?.invalid && (objPinForm.get('strTitle')?.dirty || objPinForm.get('strTitle')?.touched)}">
+      <div
+        *ngIf="objPinForm.get('strTitle')?.invalid && (objPinForm.get('strTitle')?.dirty || objPinForm.get('strTitle')?.touched)"
+        class="text-danger">
+        Name is required.
+      </div>
+    </div>
+  </div>
+  <!-- IMAGE -->
+  <div class="form-field-pd  d-flex mt-3">
+    <label class="col-sm-4 align-items-center d-flex" for="">Select Image<span class="required">*</span></label>
+    <div class="col-sm-8">
+
+  
+      <div ng2FileDrop [uploader]="uploader" formControlName="strImages" (onFileDrop)="onFileSelected($event)" class="drop-zone form-control">
+        {{fileName}}
+      </div>
+      <div
+        *ngIf="objPinForm.get('strImages')?.invalid && (objPinForm.get('strImages')?.dirty || objPinForm.get('strImages')?.touched)"
+        class="text-danger">
+        Image is required.
+      </div>
+    </div>
+  </div>
+  <!-- COLLABORATORS -->
+  <div class="form-field-pd d-flex mt-3">
+    <label class="col-sm-4 align-items-center d-flex" for="email">Collaborators<span class="required">*</span></label>
+    <div class="col-sm-8">
+      <ngx-select [items]="arrCollaborators" [multiple]="true" formControlName="strCollaborators"
+        placeholder="Select Collaborators" optionValueField="strCustomerName"></ngx-select>
+      <div
+        *ngIf="objPinForm.get('strCollaborators')?.invalid && (objPinForm.get('strCollaborators')?.dirty || objPinForm.get('strCollaborators')?.touched)"
+        class="text-danger">
+        <div *ngIf="objPinForm.get('strCollaborators')?.errors?.['required']">Collaborator is required.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-field-pd d-flex mt-3">
+    <label class="col-sm-4 align-items-center d-flex" for="privacy">Privacy<span class="required">*</span></label>
+    <div class="col-sm-8">
+      <mat-radio-group formControlName="strPrivacy">
+        <mat-radio-button value="Public" class="mr-3">Public</mat-radio-button>
+        <mat-radio-button value="Private">Private</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3">
+    <button class="btn btn-primary" (click)="createPin()">
+      Create Pin
+    </button>
+
+  </div>
+
+
+
+</form>
